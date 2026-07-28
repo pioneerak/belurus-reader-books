@@ -1,11 +1,1 @@
-{
-	"id": "sample-plugin",
-	"name": "Sample Plugin",
-	"version": "1.0.0",
-	"minAppVersion": "1.0.0",
-	"description": "Demonstrates some of the capabilities of the Obsidian API.",
-	"author": "Obsidian",
-	"authorUrl": "https://obsidian.md",
-	"fundingUrl": "https://obsidian.md/pricing",
-	"isDesktopOnly": false
-}
+{"id":"belurus-reader-books","name":"Book Reader by Belurus","version":"1.0.0","minAppVersion":"1.4.0","description":"Beautiful EPUB & PDF reader with vault-synced progress tracking.","author":"Belurus","authorUrl":"https://t.me/belurus","isDesktopOnly":false}
