@@ -44843,7 +44843,7 @@ var DEFAULT = {
 var THEMES = {
   dark: { bg: "#12121a", text: "#ddd8f0", ui: "#1c1c2a", playerBg: "color-mix(in srgb,var(--er-ui) 92%,transparent)", border: "#2e2e45", accent: "#7c6af7", playIcon: "#211b42", muted: "#6a6880" },
   light: { bg: "#faf8f3", text: "#1a1a2e", ui: "#f0ede5", playerBg: "#ffffff", border: "#ddd9ce", accent: "#40a7e3", playIcon: "#ffffff", muted: "#8a8678" },
-  sepia: { bg: "#f5efe3", text: "#2c2416", ui: "#ece4d2", playerBg: "color-mix(in srgb,var(--er-ui) 92%,transparent)", border: "#cfc4a8", accent: "#8B6914", playIcon: "#231a05", muted: "#9a8a68" }
+  sepia: { bg: "#f5efe3", text: "#2c2416", ui: "#ece4d2", playerBg: "color-mix(in srgb,var(--er-ui) 92%,transparent)", border: "#cfc4a8", accent: "#6EC398", playIcon: "#ffffff", muted: "#9a8a68" }
 };
 var FONTS = {
   georgia: "Georgia,'Times New Roman',serif",
@@ -45230,15 +45230,21 @@ async function startTtsVisualizer(view, audio) {
     context.fillStyle = getComputedStyle(canvas).color;
     const count = Math.min(2, values.length);
     const gap = 4 * ratio;
-    const barWidth = 2.2 * ratio;
+    const barWidth = 2.4 * ratio;
     const barsWidth = barWidth * count + gap * (count - 1);
     const startX = (width - barsWidth) / 2;
+    const playbackRate = Math.max(.5, Number(audio.playbackRate) || 1);
+    const rateProgress = Math.max(0, Math.min(1, (playbackRate - .5) / 1.5));
+    const phase = performance.now() * (.009 * playbackRate);
+    const maxBarHeight = 15 * ratio;
+    const waveAmplitude = .16 + rateProgress * .14;
     for (let i = 0; i < count; i++) {
-      const strength = values[Math.min(values.length - 1, 2 + i * 5)] / 255;
-      const barHeight = Math.max(8 * ratio, (.28 + strength * .29) * height);
+      const strength = values[Math.min(values.length - 1, 1 + i * 5)] / 255;
+      const wave = (Math.sin(phase + i * 1.35) + 1) / 2;
+      const barHeight = Math.min(maxBarHeight, Math.max(7 * ratio, (.22 + strength * .42 + wave * waveAmplitude) * height));
       const x = startX + i * (barWidth + gap);
       context.beginPath();
-      context.roundRect(x, (height - barHeight) / 2, barWidth, barHeight, 1.4 * ratio);
+      context.roundRect(x, (height - barHeight) / 2, barWidth, barHeight, .6 * ratio);
       context.fill();
     }
     view._ttsVisualizerFrame = requestAnimationFrame(draw);
@@ -49751,7 +49757,7 @@ var ReaderModal = class extends import_obsidian.Modal {
         this.scope.keys = this.scope.keys.filter((k) => String(k && k.key).toLowerCase() !== "escape");
       }
     } catch (e) {}
-    modalEl.style.cssText = "width:100vw!important;max-width:100vw!important;height:100svh!important;max-height:100svh!important;margin:0!important;padding:34px 0 0 0!important;box-sizing:border-box!important;border-radius:0!important;top:0!important;left:0!important;transform:none!important;overflow:hidden!important;position:fixed!important;display:flex!important;flex-direction:column!important;";
+    modalEl.style.cssText = "width:100vw!important;max-width:100vw!important;height:100dvh!important;max-height:100dvh!important;margin:0!important;padding:0!important;box-sizing:border-box!important;border-radius:0!important;top:0!important;left:0!important;transform:none!important;overflow:hidden!important;position:fixed!important;display:flex!important;flex-direction:column!important;";
     contentEl.style.cssText = "flex:1;display:flex;flex-direction:column;overflow:hidden;min-height:0;position:relative;";
     this._applyTheme();
     this._buildDOM();
