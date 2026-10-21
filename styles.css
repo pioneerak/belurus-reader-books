@@ -192,10 +192,14 @@ img.er-pdf-lazy:not([data-loaded="1"]) { background:color-mix(in srgb,var(--er-t
 .er-toc-item.active { color:var(--er-accent); opacity:1; font-weight:600; }
 .er-toc-empty { padding:48px 20px; text-align:center; font-family:'Inter',system-ui,sans-serif; font-size:13px; color:var(--er-muted); opacity:.7; }
 .modal.er-modal-lib { position:fixed!important; inset:0!important; transform:none!important; width:100vw!important; max-width:none!important; height:100vh!important; max-height:none!important; margin:0!important; padding:0!important; background:var(--er-lib-bg,#faf8f3)!important; border:0!important; border-radius:0!important; overflow:hidden!important; box-shadow:none!important; }
-.modal.er-modal-lib .modal-close-button { z-index:10; top:17px; right:18px; width:34px; height:34px; border-radius:50%; background:color-mix(in srgb,var(--er-lib-text) 7%,var(--er-lib-bg)); border:1px solid color-mix(in srgb,var(--er-lib-border) 80%,transparent); color:var(--er-lib-text); }
-.modal.er-modal-lib .modal-close-button:hover { background:color-mix(in srgb,var(--er-lib-accent) 16%,var(--er-lib-bg)); color:var(--er-lib-accent); }
-/* On phones the library renders its own close button; hide any stock one
-   (it lives outside the modal element on iOS, so a scoped selector misses it). */
+.modal.er-modal-lib .modal-close-button,
+.modal.er-modal-lib .modal-header-button { z-index:10; top:17px; right:18px; width:34px; height:34px; border-radius:50%; background:color-mix(in srgb,var(--er-lib-text) 7%,var(--er-lib-bg)); border:1px solid color-mix(in srgb,var(--er-lib-border) 80%,transparent); color:var(--er-lib-text); }
+.modal.er-modal-lib .modal-close-button:hover,
+.modal.er-modal-lib .modal-header-button:hover { background:color-mix(in srgb,var(--er-lib-accent) 16%,var(--er-lib-bg)); color:var(--er-lib-accent); }
+/* On phones the library renders its own close button in the header; hide the
+   stock one. Obsidian's Modal uses `.modal-header-button` (the class it puts on
+   the X in the corner), older builds used `.modal-close-button`. */
+body.er-lib-open .modal-header-button,
 body.er-lib-open .modal-close-button { display:none!important; }
 .er-lib { display:flex; flex-direction:column; height:100%; background:radial-gradient(80% 52% at 8% -12%,color-mix(in srgb,var(--er-lib-accent) 14%,transparent) 0%,transparent 64%),radial-gradient(70% 60% at 100% 0%,color-mix(in srgb,#73d7ff 9%,transparent) 0%,transparent 58%),var(--er-lib-bg,#faf8f3); color:var(--er-lib-text,#1a1a2e); font-family:'Inter',system-ui,sans-serif; overflow:hidden; }
 .er-lib-hdr { position:relative; z-index:2; flex-shrink:0; padding:20px clamp(18px,1.4vw,28px) 16px; overflow:hidden; }
@@ -328,7 +332,8 @@ body.er-lib-open .modal-close-button { display:none!important; }
 }
 @media (max-width:600px) {
   .modal.er-modal-lib { height:100svh!important; }
-  .modal.er-modal-lib .modal-close-button { top:10px; right:10px; width:32px; height:32px; }
+  .modal.er-modal-lib .modal-close-button,
+  .modal.er-modal-lib .modal-header-button { top:10px; right:10px; width:32px; height:32px; }
   .er-lib-hdr { padding:12px 12px 10px; }
   .er-lib-hero { gap:13px; }
   .er-lib-logo { width:46px; height:46px; }
@@ -538,7 +543,8 @@ body.er-lib-open .modal-close-button { display:none!important; }
 }
 /* The reader has its own ✕ in the toolbar. Obsidian's floating ✕ would sit
    under the status bar / Dynamic Island and overlap it on a phone. */
-.modal.er-modal-reader .modal-close-button { display:none!important; }
+.modal.er-modal-reader .modal-close-button,
+.modal.er-modal-reader .modal-header-button { display:none!important; }
 
 /* ── Reader: bars extend under the status bar, content stays in the safe area ─ */
 .modal.er-modal-reader .er-top {
@@ -649,7 +655,8 @@ body.er-lib-open .modal-close-button { display:none!important; }
     padding-left:calc(12px + env(safe-area-inset-left, 0px));
     padding-right:calc(12px + env(safe-area-inset-right, 0px));
   }
-  .modal.er-modal-lib .modal-close-button {
+  .modal.er-modal-lib .modal-close-button,
+  .modal.er-modal-lib .modal-header-button {
     /* iOS WebView reports env()=0 without viewport-fit=cover, so keep a
        status-bar/Dynamic-Island-sized floor instead of relying on env(). */
     top:max(calc(10px + env(safe-area-inset-top, 0px)), 62px);
@@ -659,8 +666,10 @@ body.er-lib-open .modal-close-button { display:none!important; }
   .modal.er-modal-lib .er-lib-brand { padding-right:48px; }
   /* Phone: hide the stock corner button (under the status bar) and use the
      in-flow close button next to the title instead. */
-  .modal.er-modal-lib.er-lib-has-close .modal-close-button { display:none!important; }
-  .modal-container.er-lib-has-close .modal-close-button { display:none!important; }
+  .modal.er-modal-lib.er-lib-has-close .modal-close-button,
+  .modal.er-modal-lib.er-lib-has-close .modal-header-button { display:none!important; }
+  .modal-container.er-lib-has-close .modal-close-button,
+  .modal-container.er-lib-has-close .modal-header-button { display:none!important; }
   .modal.er-modal-lib .er-lib-brand { align-self:stretch; width:100%; padding-right:0; }
   .modal.er-modal-lib .er-lib-close {
     display:flex; align-items:center; justify-content:center;
@@ -703,7 +712,8 @@ body.er-lib-open .modal-close-button { display:none!important; }
   .modal.er-modal-lib .er-lib-szbtn,
   .modal.er-modal-lib .er-lib-card,
   .modal.er-modal-lib .er-lib-fitbtn,
-  .modal.er-modal-lib .modal-close-button { -webkit-tap-highlight-color:transparent; touch-action:manipulation; }
+  .modal.er-modal-lib .modal-close-button,
+  .modal.er-modal-lib .modal-header-button { -webkit-tap-highlight-color:transparent; touch-action:manipulation; }
 }
 @media (max-width:1000px) and (max-height:560px) and (orientation:landscape) {
   .modal.er-modal-lib { height:100svh!important; }
@@ -713,7 +723,8 @@ body.er-lib-open .modal-close-button { display:none!important; }
     padding-right:calc(14px + env(safe-area-inset-right, 0px));
     padding-bottom:8px;
   }
-  .modal.er-modal-lib .modal-close-button {
+  .modal.er-modal-lib .modal-close-button,
+  .modal.er-modal-lib .modal-header-button {
     top:max(calc(8px + env(safe-area-inset-top, 0px)), 8px);
     right:max(calc(8px + env(safe-area-inset-right, 0px)), 62px);
     width:42px; height:42px; z-index:60;
