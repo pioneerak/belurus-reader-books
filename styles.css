@@ -1176,3 +1176,72 @@ body.er-lib-open .modal-close-button { display:none!important; }
     word-break:break-word;
   }
 }
+
+/* ── Reader modal (phones): book title on its own line, actions below ─────── */
+@media (max-width:600px) {
+  .modal.er-modal-reader .er-top {
+    display:grid;
+    grid-template-columns:40px minmax(0,1fr);
+    grid-template-areas:
+      "back title"
+      "actions actions";
+    align-items:center;
+    column-gap:4px;
+    row-gap:4px;
+    height:auto;
+    min-height:0;
+    padding-bottom:4px;
+  }
+  .modal.er-modal-reader .er-top > .er-ibtn:first-child { grid-area:back; }
+  .modal.er-modal-reader .er-top-title {
+    grid-area:title;
+    min-width:0;
+    padding-left:2px;
+    font-size:clamp(16px,4.4vw,18px);
+    font-weight:700;
+    line-height:1.2;
+    letter-spacing:-.01em;
+    text-align:left;
+    opacity:.95;
+  }
+  .modal.er-modal-reader .er-top-right {
+    grid-area:actions;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:2px;
+    width:100%;
+    min-width:0;
+    overflow-x:auto;
+    overflow-y:hidden;
+    scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;
+  }
+  .modal.er-modal-reader .er-top-right::-webkit-scrollbar { display:none; }
+  .modal.er-modal-reader .er-top .er-ibtn,
+  .modal.er-modal-reader .er-top .er-ttsbtn {
+    width:40px;
+    height:40px;
+    flex:0 0 40px;
+  }
+  .modal.er-modal-reader .er-top .er-ttsbtn { opacity:1; }
+  .modal.er-modal-reader .er-top .er-ttsbtn svg { width:15px; height:15px; }
+  .modal.er-modal-reader .er-top .er-ibtn:not(.er-ttsbtn) { opacity:.72; }
+  .modal.er-modal-reader .er-top .er-ibtn:not(.er-ttsbtn):active { opacity:1; }
+  .modal.er-modal-reader .er-top .er-timerbtn {
+    height:40px;
+    margin-right:0;
+    flex:0 0 auto;
+    box-sizing:border-box;
+  }
+}
+@media (max-width:380px) {
+  .modal.er-modal-reader .er-top { grid-template-columns:38px minmax(0,1fr); }
+  .modal.er-modal-reader .er-top .er-ibtn,
+  .modal.er-modal-reader .er-top .er-ttsbtn {
+    width:38px;
+    height:38px;
+    flex-basis:38px;
+  }
+  .modal.er-modal-reader .er-top .er-timerbtn { height:38px; }
+}
