@@ -197,7 +197,11 @@ img.er-pdf-lazy:not([data-loaded="1"]) { background:color-mix(in srgb,var(--er-t
 .er-toc-item:hover { background:rgba(0,0,0,.04); opacity:1; }
 .er-toc-item.active { color:var(--er-accent); opacity:1; font-weight:600; }
 .er-toc-empty { padding:48px 20px; text-align:center; font-family:'Inter',system-ui,sans-serif; font-size:13px; color:var(--er-muted); opacity:.7; }
-.modal.er-modal-lib { position:fixed!important; inset:0!important; transform:none!important; width:100vw!important; max-width:none!important; height:100vh!important; max-height:none!important; margin:0!important; padding:0!important; background:var(--er-lib-bg,#faf8f3)!important; border:0!important; border-radius:0!important; overflow:hidden!important; box-shadow:none!important; }
+/* Obsidian's modal-container is position:absolute. Keeping the library modal
+   fixed inside it makes iOS WebKit paint the text caret at the wrong Y after
+   the keyboard shifts the visual viewport. Absolute keeps the input in the
+   same coordinate space as the page and the caret stays inside the field. */
+.modal.er-modal-lib { position:absolute!important; inset:0!important; transform:none!important; width:100%!important; max-width:none!important; height:100%!important; max-height:none!important; margin:0!important; padding:0!important; background:var(--er-lib-bg,#faf8f3)!important; border:0!important; border-radius:0!important; overflow:hidden!important; box-shadow:none!important; }
 .modal.er-modal-lib .modal-close-button,
 .modal.er-modal-lib .modal-header-button { z-index:10; top:17px; right:18px; width:34px; height:34px; border-radius:50%; background:color-mix(in srgb,var(--er-lib-text) 7%,var(--er-lib-bg)); border:1px solid color-mix(in srgb,var(--er-lib-border) 80%,transparent); color:var(--er-lib-text); }
 .modal.er-modal-lib .modal-close-button:hover,
@@ -205,6 +209,7 @@ img.er-pdf-lazy:not([data-loaded="1"]) { background:color-mix(in srgb,var(--er-t
 /* On phones the library renders its own close button in the header; hide the
    stock one. Obsidian's Modal uses `.modal-header-button` (the class it puts on
    the X in the corner), older builds used `.modal-close-button`. */
+body.er-lib-open { overflow:hidden!important; }
 body.er-lib-open .modal-header-button,
 body.er-lib-open .modal-close-button { display:none!important; }
 .er-lib { display:flex; flex-direction:column; height:100%; background:var(--er-lib-bg,#faf8f3); color:var(--er-lib-text,#1a1a2e); font-family:'Inter',system-ui,sans-serif; overflow:hidden; }
@@ -238,11 +243,11 @@ body.er-lib-open .modal-close-button { display:none!important; }
 .er-lib-quote { animation:er-lib-quote-in .5s cubic-bezier(.22,.8,.26,1) both; }
 @media (prefers-reduced-motion:reduce) { .er-lib-quote { animation:none; } }
 .er-lib-toolbar { display:flex; width:100%; min-width:0; flex-direction:row; align-items:center; gap:9px; margin:20px 0 0; padding:0; }
-.er-lib-search { display:flex; align-items:center; gap:10px; width:auto; height:44px; padding:0 15px; border:1px solid color-mix(in srgb,var(--er-lib-text) 6%,transparent); border-radius:14px; background:color-mix(in srgb,var(--er-lib-bg) 87%,transparent); box-shadow:0 9px 26px color-mix(in srgb,var(--er-lib-text) 7%,transparent),inset 0 1px 0 rgba(255,255,255,.3); flex:0 1 300px; min-width:190px; -webkit-backdrop-filter:blur(15px); backdrop-filter:blur(15px); transition:border-color .15s,box-shadow .15s,background .15s; }
+.er-lib-search { display:flex; align-items:center; gap:10px; width:auto; height:44px; padding:0 15px; border:1px solid color-mix(in srgb,var(--er-lib-text) 6%,transparent); border-radius:14px; background:color-mix(in srgb,var(--er-lib-bg) 94%,transparent); box-shadow:0 9px 26px color-mix(in srgb,var(--er-lib-text) 7%,transparent),inset 0 1px 0 rgba(255,255,255,.3); flex:0 1 300px; min-width:190px; transition:border-color .15s,box-shadow .15s,background .15s; }
 .er-lib-search:focus-within { border-color:var(--er-lib-accent); background:var(--er-lib-bg); box-shadow:0 0 0 3px color-mix(in srgb,var(--er-lib-accent) 13%,transparent); }
 .er-lib-search-ic { display:flex; color:var(--er-lib-muted); opacity:.75; }
 .er-lib-search-ic svg { width:16px; height:16px; }
-.er-lib-search .er-lib-search-input { flex:1; min-width:0; background:transparent!important; border:none!important; outline:none!important; box-shadow:none!important; color:var(--er-lib-text); font-size:13.5px; font-family:'Inter',system-ui,sans-serif; line-height:normal; padding:0!important; height:100%!important; min-height:0!important; box-sizing:border-box; -webkit-appearance:none; appearance:none; }
+.er-lib-search .er-lib-search-input { flex:1; min-width:0; background:transparent!important; border:none!important; outline:none!important; box-shadow:none!important; color:var(--er-lib-text); font-size:13.5px; font-family:'Inter',system-ui,sans-serif; line-height:1.2; padding:0!important; height:100%!important; min-height:0!important; box-sizing:border-box; -webkit-appearance:none; appearance:none; -webkit-user-select:text; user-select:text; }
 .er-lib-search-input::placeholder { color:var(--er-lib-muted); opacity:.75; }
 .er-lib-controls { display:flex; align-items:center; gap:12px; padding:7px; border-radius:17px; background:color-mix(in srgb,var(--er-lib-bg) 78%,transparent); box-shadow:0 12px 32px color-mix(in srgb,var(--er-lib-text) 8%,transparent),inset 0 0 0 1px color-mix(in srgb,var(--er-lib-text) 6%,transparent); -webkit-backdrop-filter:blur(16px); backdrop-filter:blur(16px); }
 .er-lib-themebtn { width:33px; height:33px; display:grid; grid-template-columns:repeat(3,1fr); gap:3px; align-items:center; padding:7px; border:1px solid transparent!important; border-radius:11px; background:color-mix(in srgb,var(--er-lib-text) 6%,var(--er-lib-bg))!important; box-shadow:none!important; cursor:pointer; transition:background .13s,transform .1s,border-color .13s; }
@@ -651,6 +656,13 @@ body.er-lib-open .modal-close-button { display:none!important; }
 @media (max-width:1000px) {
   /* 16px prevents iOS from auto-zooming the whole WebView on focus. */
   .er-lib-search .er-lib-search-input { font-size:16px; }
+  /* A translucent, blurred field gets its own compositing layer on iOS; the
+     caret can be painted at a stale offset when the keyboard opens. */
+  .modal.er-modal-lib .er-lib-search {
+    background:var(--er-lib-bg);
+    -webkit-backdrop-filter:none;
+    backdrop-filter:none;
+  }
   .modal.er-modal-lib .er-lib-search,
   .modal.er-modal-lib .er-lib-select,
   .modal.er-modal-lib .er-lib-direction { box-sizing:border-box; }
@@ -946,31 +958,38 @@ body.er-lib-open .modal-close-button { display:none!important; }
     display:block;
     grid-area:head;
     min-width:0;
-    padding:2px 0 10px;
+    padding:2px 0 12px;
   }
+  /* The reference player lets the book title run over several lines instead
+     of hiding it behind a single-line ellipsis. Cap it at five lines so a very
+     long title can never squeeze the chapter list off the screen. */
   .br-audio-full-title {
+    display:-webkit-box;
     overflow:hidden;
     color:var(--er-text);
     font-size:20px;
     font-weight:700;
-    line-height:1.25;
-    text-overflow:ellipsis;
-    white-space:nowrap;
+    line-height:1.3;
+    letter-spacing:-.01em;
+    overflow-wrap:anywhere;
+    white-space:normal;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:5;
   }
   .br-audio-player.is-expanded .br-audio-meta {
     display:flex;
     grid-area:meta;
     flex-direction:row;
     align-items:center;
-    gap:8px;
+    gap:9px;
     width:100%;
     min-width:0;
-    padding:0 0 10px;
+    padding:0 0 12px;
   }
   .br-audio-player.is-expanded .br-audio-time {
     display:contents;
-    font-size:13px;
-    line-height:1.2;
+    font-size:14px;
+    line-height:1.3;
   }
   .br-audio-player.is-expanded .br-audio-time-current { order:0; flex:0 0 auto; }
   .br-audio-player.is-expanded .br-audio-meta-dot {
@@ -1002,9 +1021,9 @@ body.er-lib-open .modal-close-button { display:none!important; }
     display:block;
     min-width:0;
     color:var(--er-accent);
-    font-size:17px;
-    font-weight:650;
-    line-height:1.3;
+    font-size:14px;
+    font-weight:600;
+    line-height:1.35;
   }
   .br-audio-player.is-expanded .br-audio-close {
     grid-area:close;
@@ -1019,7 +1038,7 @@ body.er-lib-open .modal-close-button { display:none!important; }
   .br-audio-player.is-expanded .br-audio-progress-wrap {
     grid-area:progress;
     height:10px;
-    margin:0 0 16px;
+    margin:0 0 18px;
     overflow:visible;
     border-radius:0;
     background:transparent;
@@ -1038,30 +1057,31 @@ body.er-lib-open .modal-close-button { display:none!important; }
     justify-self:start;
   }
   .br-audio-player.is-expanded .br-audio-speed {
-    min-width:58px;
+    min-width:0;
     height:40px;
-    padding:0 12px!important;
-    border-radius:999px!important;
-    color:var(--er-accent)!important;
-    background:color-mix(in srgb,var(--er-accent) 12%,transparent)!important;
-    font-size:14px;
-    font-weight:650;
+    padding:0 4px!important;
+    border-radius:0!important;
+    color:color-mix(in srgb,var(--er-text) 78%,var(--er-muted))!important;
+    background:transparent!important;
+    font-size:15px;
+    font-weight:600;
+    letter-spacing:-.01em;
   }
   .br-audio-player.is-expanded .br-audio-transport {
     grid-area:transport;
     align-self:center;
     justify-self:center;
-    gap:20px;
+    gap:24px;
   }
   .br-audio-player.is-expanded .br-audio-icon {
     display:grid;
     width:48px;
     height:48px;
-    border-radius:50%!important;
-    color:var(--er-text)!important;
-    background:color-mix(in srgb,var(--er-text) 8%,transparent)!important;
+    border-radius:0!important;
+    color:color-mix(in srgb,var(--er-text) 86%,var(--er-muted))!important;
+    background:transparent!important;
   }
-  .br-audio-player.is-expanded .br-audio-icon svg { width:26px; height:26px; }
+  .br-audio-player.is-expanded .br-audio-icon svg { width:31px; height:31px; }
   .br-audio-player.is-expanded .br-audio-play { width:64px; height:64px; }
   .br-audio-player.is-expanded .br-audio-play-icon svg { width:24px; height:24px; }
   .br-audio-player.is-expanded .br-audio-visualizer { width:42px; height:42px; }
@@ -1077,8 +1097,8 @@ body.er-lib-open .modal-close-button { display:none!important; }
     width:44px;
     height:44px;
     flex:0 0 44px;
-    color:var(--er-text)!important;
-    background:color-mix(in srgb,var(--er-text) 8%,transparent)!important;
+    color:color-mix(in srgb,var(--er-text) 86%,var(--er-muted))!important;
+    background:transparent!important;
   }
   .br-audio-player.is-expanded .br-audio-volume-button svg { width:22px; height:22px; }
   .br-audio-player.is-expanded .br-audio-spacer { display:none; }
@@ -1095,9 +1115,10 @@ body.er-lib-open .modal-close-button { display:none!important; }
     flex:0 0 auto;
     padding:14px 0 8px;
     color:var(--er-text);
-    font-size:18px;
+    font-size:19px;
     font-weight:700;
     line-height:1.25;
+    letter-spacing:-.01em;
   }
   .br-audio-player.is-expanded .br-audio-timecodes-list {
     flex:1 1 auto;
@@ -1110,19 +1131,25 @@ body.er-lib-open .modal-close-button { display:none!important; }
     overscroll-behavior-y:contain;
     touch-action:pan-y;
     -webkit-overflow-scrolling:touch;
-    padding:0 6px 24px;
+    /* Fade the rows at both edges while the list is being scrolled: the first
+       and last visible chapter gradually disappear into the player background,
+       just like the dimmed rows in the reference screen. */
+    -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 34px,#000 calc(100% - 34px),transparent 100%);
+    mask-image:linear-gradient(to bottom,transparent 0,#000 34px,#000 calc(100% - 34px),transparent 100%);
+    scroll-padding-block:34px;
+    padding:0 6px 26px;
     box-sizing:border-box;
   }
   .br-audio-player.is-expanded .br-audio-timecode-item {
     display:grid;
     grid-template-columns:12px minmax(0,1fr) auto;
     align-items:center;
-    gap:8px;
+    gap:9px;
     width:100%;
     max-width:100%;
-    min-height:48px;
+    min-height:42px;
     margin:0;
-    padding:10px 8px;
+    padding:6px 8px;
     border-radius:10px;
     color:var(--er-text);
     cursor:pointer;
@@ -1147,13 +1174,13 @@ body.er-lib-open .modal-close-button { display:none!important; }
     min-width:0;
     overflow:hidden;
     font-size:14px;
-    line-height:1.35;
+    line-height:1.4;
     text-overflow:ellipsis;
     white-space:nowrap;
   }
   .br-audio-player.is-expanded .br-audio-timecode-time {
     color:var(--er-muted);
-    font-size:12px;
+    font-size:12.5px;
     font-variant-numeric:tabular-nums;
     white-space:nowrap;
   }
