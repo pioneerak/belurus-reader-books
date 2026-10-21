@@ -194,6 +194,9 @@ img.er-pdf-lazy:not([data-loaded="1"]) { background:color-mix(in srgb,var(--er-t
 .modal.er-modal-lib { position:fixed!important; inset:0!important; transform:none!important; width:100vw!important; max-width:none!important; height:100vh!important; max-height:none!important; margin:0!important; padding:0!important; background:var(--er-lib-bg,#faf8f3)!important; border:0!important; border-radius:0!important; overflow:hidden!important; box-shadow:none!important; }
 .modal.er-modal-lib .modal-close-button { z-index:10; top:17px; right:18px; width:34px; height:34px; border-radius:50%; background:color-mix(in srgb,var(--er-lib-text) 7%,var(--er-lib-bg)); border:1px solid color-mix(in srgb,var(--er-lib-border) 80%,transparent); color:var(--er-lib-text); }
 .modal.er-modal-lib .modal-close-button:hover { background:color-mix(in srgb,var(--er-lib-accent) 16%,var(--er-lib-bg)); color:var(--er-lib-accent); }
+/* On phones the library renders its own close button; hide any stock one
+   (it lives outside the modal element on iOS, so a scoped selector misses it). */
+body.er-lib-open .modal-close-button { display:none!important; }
 .er-lib { display:flex; flex-direction:column; height:100%; background:radial-gradient(80% 52% at 8% -12%,color-mix(in srgb,var(--er-lib-accent) 14%,transparent) 0%,transparent 64%),radial-gradient(70% 60% at 100% 0%,color-mix(in srgb,#73d7ff 9%,transparent) 0%,transparent 58%),var(--er-lib-bg,#faf8f3); color:var(--er-lib-text,#1a1a2e); font-family:'Inter',system-ui,sans-serif; overflow:hidden; }
 .er-lib-hdr { position:relative; z-index:2; flex-shrink:0; padding:20px clamp(18px,1.4vw,28px) 16px; overflow:hidden; }
 .er-lib-hdr::after { content:""; position:absolute; right:-10%; bottom:-120px; width:55%; height:230px; border-radius:50%; background:color-mix(in srgb,var(--er-lib-accent) 10%,transparent); filter:blur(68px); pointer-events:none; }
