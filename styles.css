@@ -366,8 +366,9 @@ body.er-lib-open .modal-close-button { display:none!important; }
   .er-ibtn { width:44px; height:44px; }
   .er-top { height:54px; gap:6px; padding:0 10px; }
   .er-top-right { gap:5px; }
-  /* Mobile exposes read-aloud in the overflow menu to preserve title width. */
-  .er-modal-reader .er-ttsbtn { display:none; }
+  /* Read-aloud sits directly in the top bar, like the desktop reader. The ⋯
+     menu keeps a duplicate entry as a fallback. */
+  .er-modal-reader .er-ttsbtn { display:flex; }
   .er-bot { height:64px; }
   .br-audio-player { margin:0; border-radius:0; }
   .br-audio-controls { min-height:53px; gap:5px; padding:6px 7px; }
