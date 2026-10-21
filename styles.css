@@ -980,7 +980,7 @@ body.er-lib-open .modal-close-button { display:none!important; }
     pointer-events:none;
   }
   .br-audio-player.is-expanded .br-audio-chapter-title {
-    color:var(--er-text);
+    color:var(--er-accent);
     font-size:17px;
     font-weight:650;
     line-height:1.3;
@@ -998,14 +998,19 @@ body.er-lib-open .modal-close-button { display:none!important; }
   }
   .br-audio-player.is-expanded .br-audio-progress-wrap {
     grid-area:progress;
-    height:12px;
-    margin:0 0 14px;
-    overflow:hidden;
-    border-radius:999px;
-    background:color-mix(in srgb,var(--er-text) 14%,transparent);
+    height:10px;
+    margin:0 0 16px;
+    overflow:visible;
+    border-radius:0;
+    background:transparent;
   }
-  .br-audio-player.is-expanded .br-audio-segments { inset:2px 0; }
-  .br-audio-player.is-expanded .br-audio-progress { inset:-6px 0; height:24px; }
+  .br-audio-player.is-expanded .br-audio-segments { inset:0; gap:3px; }
+  .br-audio-player.is-expanded .br-audio-segment {
+    border-radius:999px;
+    background:color-mix(in srgb,var(--er-text) 16%,transparent);
+  }
+  .br-audio-player.is-expanded .br-audio-segment-fill { box-shadow:none; }
+  .br-audio-player.is-expanded .br-audio-progress { inset:-7px 0; height:24px; }
   .br-audio-player.is-expanded .br-audio-speed-wrap {
     display:block;
     grid-area:speed;
@@ -1096,7 +1101,7 @@ body.er-lib-open .modal-close-button { display:none!important; }
   }
   .br-audio-player.is-expanded .br-audio-timecode-item.is-current {
     color:var(--er-accent);
-    background:color-mix(in srgb,var(--er-accent) 12%,transparent);
+    background:transparent;
   }
   .br-audio-player.is-expanded .br-audio-timecode-dot {
     width:7px;
@@ -1106,7 +1111,8 @@ body.er-lib-open .modal-close-button { display:none!important; }
   }
   .br-audio-player.is-expanded .br-audio-timecode-item.is-current .br-audio-timecode-dot {
     background:var(--er-accent);
-    box-shadow:0 0 0 4px color-mix(in srgb,var(--er-accent) 14%,transparent);
+    box-shadow:0 0 0 0 color-mix(in srgb,var(--er-accent) 55%,transparent);
+    animation:br-chapter-pulse 1.5s ease-out infinite;
   }
   .br-audio-player.is-expanded .br-audio-timecode-title {
     overflow:hidden;
