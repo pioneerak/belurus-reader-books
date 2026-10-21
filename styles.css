@@ -93,7 +93,7 @@ img.er-pdf-lazy:not([data-loaded="1"]) { background:color-mix(in srgb,var(--er-t
 .br-audio-menu-icon { display:grid; flex:0 0 auto; place-items:center; color:var(--er-muted); }
 .br-audio-menu-icon svg { width:23px; height:23px; }
 .br-audio-chapter-title { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-.br-audio-visualizer { position:absolute; z-index:1; inset:5px; width:30px; height:30px; color:var(--er-play-icon,color-mix(in srgb,#000 75%,var(--er-accent))); opacity:0; pointer-events:none; transition:opacity .15s; }
+.br-audio-visualizer { position:absolute; z-index:1; inset:0; margin:auto; width:30px; height:30px; color:var(--er-play-icon,color-mix(in srgb,#000 75%,var(--er-accent))); opacity:0; pointer-events:none; transition:opacity .15s; }
 .br-audio-play.is-speaking .br-audio-visualizer { opacity:.92; }
 .br-audio-play.br-is-loading .br-audio-visualizer { display:none; }
 .br-audio-spacer { flex:1 1 auto; min-width:8px; }
@@ -201,9 +201,8 @@ img.er-pdf-lazy:not([data-loaded="1"]) { background:color-mix(in srgb,var(--er-t
    the X in the corner), older builds used `.modal-close-button`. */
 body.er-lib-open .modal-header-button,
 body.er-lib-open .modal-close-button { display:none!important; }
-.er-lib { display:flex; flex-direction:column; height:100%; background:radial-gradient(80% 52% at 8% -12%,color-mix(in srgb,var(--er-lib-accent) 14%,transparent) 0%,transparent 64%),radial-gradient(70% 60% at 100% 0%,color-mix(in srgb,#73d7ff 9%,transparent) 0%,transparent 58%),var(--er-lib-bg,#faf8f3); color:var(--er-lib-text,#1a1a2e); font-family:'Inter',system-ui,sans-serif; overflow:hidden; }
+.er-lib { display:flex; flex-direction:column; height:100%; background:var(--er-lib-bg,#faf8f3); color:var(--er-lib-text,#1a1a2e); font-family:'Inter',system-ui,sans-serif; overflow:hidden; }
 .er-lib-hdr { position:relative; z-index:2; flex-shrink:0; padding:20px clamp(18px,1.4vw,28px) 16px; overflow:hidden; }
-.er-lib-hdr::after { content:""; position:absolute; right:-10%; bottom:-120px; width:55%; height:230px; border-radius:50%; background:color-mix(in srgb,var(--er-lib-accent) 10%,transparent); filter:blur(68px); pointer-events:none; }
 .er-lib-hero { position:relative; z-index:2; display:grid; width:100%; grid-template-columns:minmax(470px,.88fr) minmax(600px,1.12fr); gap:clamp(28px,3vw,58px); align-items:stretch; min-height:190px; }
 .er-lib-main { position:relative; z-index:3; display:flex; min-width:0; flex-direction:column; justify-content:space-between; align-items:flex-start; padding:5px 0 2px; }
 .er-lib-brand { display:flex; align-items:center; gap:17px; margin:0; }
@@ -679,8 +678,11 @@ body.er-lib-open .modal-close-button { display:none!important; }
     border:1px solid color-mix(in srgb,var(--er-lib-border) 80%,transparent);
     background:color-mix(in srgb,var(--er-lib-text) 8%,var(--er-lib-bg));
     color:var(--er-lib-text);
-    font-family:'Inter',system-ui,sans-serif; font-size:28px; font-weight:300; line-height:1;
+    font-family:'Inter',system-ui,sans-serif; line-height:1;
     cursor:pointer; -webkit-tap-highlight-color:transparent; touch-action:manipulation;
+  }
+  .modal.er-modal-lib .er-lib-close svg {
+    display:block; width:20px; height:20px; pointer-events:none;
   }
   .modal.er-modal-lib .er-lib-close:active {
     background:color-mix(in srgb,var(--er-lib-accent) 18%,var(--er-lib-bg));
