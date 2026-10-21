@@ -75,6 +75,8 @@ img.er-pdf-lazy:not([data-loaded="1"]) { background:color-mix(in srgb,var(--er-t
 .br-audio-segment-fill { position:absolute; inset:0 auto 0 0; width:0; background:var(--er-accent); box-shadow:0 0 10px color-mix(in srgb,var(--er-accent) 55%,transparent); }
 .br-audio-progress { position:absolute; inset:-8px 0; z-index:2; width:100%; height:22px; margin:0; opacity:0; pointer-events:none; }
 .br-audio-controls { display:flex; min-width:0; min-height:58px; align-items:center; gap:10px; padding:7px 11px; font:500 14px/1.25 'Inter',system-ui,sans-serif; }
+.br-audio-meta { display:flex; flex:0 1 auto; min-width:0; align-items:center; gap:10px; }
+.br-audio-full-head,.br-audio-timecodes { display:none; }
 .br-audio-transport { display:flex; flex:0 0 auto; align-items:center; gap:5px; }
 .br-audio-controls button { border:0; color:var(--er-text); background:transparent; box-shadow:none; cursor:pointer; }
 .br-audio-icon { display:grid; width:37px; height:35px; place-items:center; padding:0; border-radius:7px!important; color:var(--text-muted,var(--er-muted))!important; transition:opacity .15s,transform .15s,color .15s,background .15s; }
@@ -813,63 +815,326 @@ body.er-lib-open .modal-close-button { display:none!important; }
   .er-onb-body p { font-size:13px; line-height:1.5; }
 }
 
-/* ── Read-aloud: compact phone layout (full layout remains in landscape) ─── */
+/* ── Read-aloud: phone mini-player + full player ─────────────────────── */
 @media (max-width:600px) {
-  .br-audio-controls { min-height:56px; gap:6px; padding:6px 8px; }
-  .br-audio-progress-wrap { height:16px; }
-  .br-audio-segments { inset:4px 0; }
-  .br-audio-play { width:44px; height:44px; }
-  /* Keep all three counters on a phone: current / total on the first line,
-     time left on a second, smaller line. This stays inside the 44px play
-     button height while leaving the chapter title room to breathe. */
-  .br-audio-time {
+  .br-audio-player { margin:0; border-radius:0; }
+
+  /* Mini-player: large play/pause on the left, all three counters on one
+     line, the current chapter under them, and a close button on the right. */
+  .br-audio-controls {
     display:grid;
-    grid-template-columns:auto auto;
-    grid-template-areas:"current duration" "remaining remaining";
-    align-content:center;
+    grid-template-columns:44px minmax(0,1fr) 36px;
+    grid-template-areas:"play meta close";
+    align-items:center;
+    min-height:64px;
+    gap:10px;
+    padding:8px 10px calc(8px + env(safe-area-inset-bottom,0px));
+  }
+  .modal.er-modal-reader .br-audio-controls {
+    padding:8px 10px calc(8px + env(safe-area-inset-bottom,0px));
+  }
+  .br-audio-progress-wrap { height:12px; }
+  .br-audio-segments { inset:3px 0; }
+  .br-audio-transport { grid-area:play; justify-self:start; gap:0; }
+  .br-audio-icon { display:none; }
+  .br-audio-play { width:44px; height:44px; }
+  .br-audio-meta {
+    grid-area:meta;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    justify-content:center;
+    gap:2px;
+    width:100%;
+    min-width:0;
+  }
+  .br-audio-player:not(.is-expanded) .br-audio-meta {
+    cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .br-audio-time {
+    display:flex;
     align-items:baseline;
-    justify-content:start;
-    column-gap:4px;
-    row-gap:1px;
-    font-size:11px;
-    line-height:1.05;
-  }
-  .br-audio-time-current { grid-area:current; }
-  .br-audio-time-duration { grid-area:duration; }
-  .br-audio-time-duration::before {
-    content:"/";
-    margin-right:3px;
+    gap:0;
+    max-width:100%;
+    overflow:hidden;
     color:var(--er-muted);
-    font-weight:500;
-    opacity:.75;
+    font-size:13px;
+    line-height:1.15;
+    white-space:nowrap;
   }
-  .br-audio-time .br-audio-time-separator { display:none; }
+  .br-audio-time-current { color:var(--er-text); }
+  .br-audio-time .br-audio-time-separator { display:inline; }
+  .br-audio-time-duration::before,
+  .br-audio-time-remaining::before { content:none; display:none; }
   .br-audio-time-remaining {
-    grid-area:remaining;
-    display:block;
-    font-size:10px;
-    font-weight:600;
+    display:inline;
+    font-size:inherit;
+    font-weight:500;
     color:var(--er-muted);
-    opacity:.92;
+    opacity:1;
   }
-  .br-audio-time-remaining::before {
-    content:"\2212";
-    margin-right:1px;
-    opacity:.7;
+  .br-audio-chapter-wrap { width:100%; max-width:none; }
+  .br-audio-chapter-button {
+    width:100%;
+    height:auto;
+    min-height:19px;
+    justify-content:flex-start;
+    padding:0!important;
+    border-radius:0!important;
+    background:transparent!important;
+    font-size:14px;
+    line-height:1.2;
   }
-  .br-audio-chapter-wrap { flex:1 1 auto; max-width:none; }
-  .br-audio-chapter-button { width:100%; height:44px; }
-  .br-audio-chapter-title { font-size:12px; }
-  .br-audio-spacer { flex:0 0 4px; min-width:4px; }
-  .br-audio-volume { gap:0; }
-  .br-audio-volume input { display:none; }
-  .br-audio-volume-button { width:32px; height:32px; flex:0 0 32px; }
-  .br-audio-speed { height:36px; min-width:52px; }
-  .br-audio-close { width:36px; height:36px; flex:0 0 36px; font-size:24px; }
-  .br-audio-chapter-menu { max-height:min(320px,48vh); }
+  .br-audio-menu-icon { display:none; }
+  .br-audio-chapter-title {
+    font-size:14px;
+    color:color-mix(in srgb,var(--er-text) 94%,var(--er-muted));
+  }
+  .br-audio-spacer,
+  .br-audio-speed-wrap,
+  .br-audio-volume { display:none; }
+  .br-audio-close {
+    grid-area:close;
+    justify-self:end;
+    width:36px;
+    height:36px;
+    flex:0 0 36px;
+    color:var(--er-text)!important;
+    background:color-mix(in srgb,var(--er-text) 7%,transparent)!important;
+    font-size:24px;
+  }
+  .br-audio-chapter-menu { display:none!important; }
   .br-audio-speed-menu { width:min(280px,calc(100vw - 16px)); }
   .br-audio-chapter-item,
   .br-audio-speed-preset { min-height:44px; }
+
+  /* Expanded player: a viewport-high sheet that mirrors the reference
+     layout — title, counters + chapter, segmented progress, transport row,
+     then a scrollable timecodes list. */
+  .br-audio-player.is-expanded {
+    position:absolute;
+    inset:0;
+    z-index:80;
+    display:grid;
+    grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);
+    grid-template-rows:auto auto auto auto minmax(0,1fr);
+    grid-template-areas:
+      "head head close"
+      "meta meta meta"
+      "progress progress progress"
+      "speed transport volume"
+      "timecodes timecodes timecodes";
+    gap:0 12px;
+    width:100%;
+    height:100%;
+    min-height:0;
+    margin:0;
+    padding:calc(10px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));
+    border-top:0;
+    border-radius:0;
+    background:var(--er-bg);
+    box-shadow:none;
+    overflow:hidden;
+    box-sizing:border-box;
+  }
+  .br-audio-player.is-expanded .br-audio-controls { display:contents; }
+  .br-audio-player.is-expanded .br-audio-full-head {
+    display:block;
+    grid-area:head;
+    min-width:0;
+    padding:2px 0 10px;
+  }
+  .br-audio-full-title {
+    overflow:hidden;
+    color:var(--er-text);
+    font-size:20px;
+    font-weight:700;
+    line-height:1.25;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .br-audio-player.is-expanded .br-audio-meta {
+    display:flex;
+    grid-area:meta;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:4px;
+    width:100%;
+    min-width:0;
+    padding:0 0 10px;
+  }
+  .br-audio-player.is-expanded .br-audio-time {
+    display:flex;
+    align-items:baseline;
+    gap:0;
+    font-size:13px;
+    line-height:1.2;
+  }
+  .br-audio-player.is-expanded .br-audio-chapter-wrap { width:100%; max-width:none; }
+  .br-audio-player.is-expanded .br-audio-chapter-button {
+    width:100%;
+    height:auto;
+    min-height:24px;
+    padding:0!important;
+    pointer-events:none;
+  }
+  .br-audio-player.is-expanded .br-audio-chapter-title {
+    color:var(--er-text);
+    font-size:17px;
+    font-weight:650;
+    line-height:1.3;
+  }
+  .br-audio-player.is-expanded .br-audio-close {
+    grid-area:close;
+    align-self:start;
+    justify-self:end;
+    width:40px;
+    height:40px;
+    flex:0 0 40px;
+    color:var(--er-text)!important;
+    background:color-mix(in srgb,var(--er-text) 8%,transparent)!important;
+    font-size:26px;
+  }
+  .br-audio-player.is-expanded .br-audio-progress-wrap {
+    grid-area:progress;
+    height:12px;
+    margin:0 0 14px;
+    overflow:hidden;
+    border-radius:999px;
+    background:color-mix(in srgb,var(--er-text) 14%,transparent);
+  }
+  .br-audio-player.is-expanded .br-audio-segments { inset:2px 0; }
+  .br-audio-player.is-expanded .br-audio-progress { inset:-6px 0; height:24px; }
+  .br-audio-player.is-expanded .br-audio-speed-wrap {
+    display:block;
+    grid-area:speed;
+    align-self:center;
+    justify-self:start;
+  }
+  .br-audio-player.is-expanded .br-audio-speed {
+    min-width:58px;
+    height:40px;
+    padding:0 12px!important;
+    border-radius:999px!important;
+    color:var(--er-accent)!important;
+    background:color-mix(in srgb,var(--er-accent) 12%,transparent)!important;
+    font-size:14px;
+    font-weight:650;
+  }
+  .br-audio-player.is-expanded .br-audio-transport {
+    grid-area:transport;
+    align-self:center;
+    justify-self:center;
+    gap:20px;
+  }
+  .br-audio-player.is-expanded .br-audio-icon {
+    display:grid;
+    width:48px;
+    height:48px;
+    border-radius:50%!important;
+    color:var(--er-text)!important;
+    background:color-mix(in srgb,var(--er-text) 8%,transparent)!important;
+  }
+  .br-audio-player.is-expanded .br-audio-icon svg { width:26px; height:26px; }
+  .br-audio-player.is-expanded .br-audio-play { width:64px; height:64px; }
+  .br-audio-player.is-expanded .br-audio-play-icon svg { width:24px; height:24px; }
+  .br-audio-player.is-expanded .br-audio-visualizer { width:42px; height:42px; }
+  .br-audio-player.is-expanded .br-audio-volume {
+    display:flex;
+    grid-area:volume;
+    align-self:center;
+    justify-self:end;
+    gap:0;
+  }
+  .br-audio-player.is-expanded .br-audio-volume input { display:none; }
+  .br-audio-player.is-expanded .br-audio-volume-button {
+    width:44px;
+    height:44px;
+    flex:0 0 44px;
+    color:var(--er-text)!important;
+    background:color-mix(in srgb,var(--er-text) 8%,transparent)!important;
+  }
+  .br-audio-player.is-expanded .br-audio-volume-button svg { width:22px; height:22px; }
+  .br-audio-player.is-expanded .br-audio-spacer { display:none; }
+  .br-audio-player.is-expanded .br-audio-timecodes {
+    display:flex;
+    grid-area:timecodes;
+    flex-direction:column;
+    width:100%;
+    min-height:0;
+    margin-top:6px;
+    border-top:1px solid color-mix(in srgb,var(--er-text) 10%,transparent);
+  }
+  .br-audio-player.is-expanded .br-audio-timecodes-title {
+    flex:0 0 auto;
+    padding:14px 0 8px;
+    color:var(--er-text);
+    font-size:18px;
+    font-weight:700;
+    line-height:1.25;
+  }
+  .br-audio-player.is-expanded .br-audio-timecodes-list {
+    flex:1 1 auto;
+    min-height:0;
+    overflow-y:auto;
+    overscroll-behavior:contain;
+    -webkit-overflow-scrolling:touch;
+    padding-bottom:24px;
+  }
+  .br-audio-player.is-expanded .br-audio-timecode-item {
+    display:grid;
+    grid-template-columns:12px minmax(0,1fr) auto;
+    align-items:center;
+    gap:10px;
+    min-height:48px;
+    margin:0 -8px;
+    padding:10px 8px;
+    border-radius:10px;
+    color:var(--er-text);
+    cursor:pointer;
+  }
+  .br-audio-player.is-expanded .br-audio-timecode-item.is-current {
+    color:var(--er-accent);
+    background:color-mix(in srgb,var(--er-accent) 12%,transparent);
+  }
+  .br-audio-player.is-expanded .br-audio-timecode-dot {
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:transparent;
+  }
+  .br-audio-player.is-expanded .br-audio-timecode-item.is-current .br-audio-timecode-dot {
+    background:var(--er-accent);
+    box-shadow:0 0 0 4px color-mix(in srgb,var(--er-accent) 14%,transparent);
+  }
+  .br-audio-player.is-expanded .br-audio-timecode-title {
+    overflow:hidden;
+    font-size:14px;
+    line-height:1.35;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .br-audio-player.is-expanded .br-audio-timecode-time {
+    color:var(--er-muted);
+    font-size:12px;
+    font-variant-numeric:tabular-nums;
+    white-space:nowrap;
+  }
+  .br-audio-player.is-expanded .br-audio-timecode-item.is-current .br-audio-timecode-time { color:var(--er-accent); }
+  .br-audio-player.is-expanded .br-audio-timecodes-list .br-audio-chapter-empty { padding:24px 0; }
+  .br-audio-player.is-expanded .br-audio-chapter-menu { display:none!important; }
+  .br-audio-player.is-expanded .br-audio-speed-menu {
+    top:calc(100% + 10px);
+    right:auto;
+    bottom:auto;
+    left:0;
+  }
+}
+@media (max-width:600px) {
+  .modal.er-modal-reader .br-audio-player.is-expanded {
+    padding:calc(10px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));
+  }
 }
 
 /* Phones: the TOC / settings / highlights panel is a viewport-bound bottom
