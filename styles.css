@@ -242,7 +242,7 @@ body.er-lib-open .modal-close-button { display:none!important; }
 .er-lib-search:focus-within { border-color:var(--er-lib-accent); background:var(--er-lib-bg); box-shadow:0 0 0 3px color-mix(in srgb,var(--er-lib-accent) 13%,transparent); }
 .er-lib-search-ic { display:flex; color:var(--er-lib-muted); opacity:.75; }
 .er-lib-search-ic svg { width:16px; height:16px; }
-.er-lib-search-input { flex:1; background:transparent!important; border:none!important; outline:none!important; box-shadow:none!important; color:var(--er-lib-text); font-size:13.5px; font-family:'Inter',system-ui,sans-serif; padding:0!important; height:100%; }
+.er-lib-search .er-lib-search-input { flex:1; min-width:0; background:transparent!important; border:none!important; outline:none!important; box-shadow:none!important; color:var(--er-lib-text); font-size:13.5px; font-family:'Inter',system-ui,sans-serif; line-height:normal; padding:0!important; height:100%!important; min-height:0!important; box-sizing:border-box; -webkit-appearance:none; appearance:none; }
 .er-lib-search-input::placeholder { color:var(--er-lib-muted); opacity:.75; }
 .er-lib-controls { display:flex; align-items:center; gap:12px; padding:7px; border-radius:17px; background:color-mix(in srgb,var(--er-lib-bg) 78%,transparent); box-shadow:0 12px 32px color-mix(in srgb,var(--er-lib-text) 8%,transparent),inset 0 0 0 1px color-mix(in srgb,var(--er-lib-text) 6%,transparent); -webkit-backdrop-filter:blur(16px); backdrop-filter:blur(16px); }
 .er-lib-themebtn { width:33px; height:33px; display:grid; grid-template-columns:repeat(3,1fr); gap:3px; align-items:center; padding:7px; border:1px solid transparent!important; border-radius:11px; background:color-mix(in srgb,var(--er-lib-text) 6%,var(--er-lib-bg))!important; box-shadow:none!important; cursor:pointer; transition:background .13s,transform .1s,border-color .13s; }
@@ -650,7 +650,7 @@ body.er-lib-open .modal-close-button { display:none!important; }
 /* ── Library: safe areas, comfortable controls, usable filter grid ───────── */
 @media (max-width:1000px) {
   /* 16px prevents iOS from auto-zooming the whole WebView on focus. */
-  .er-lib-search-input { font-size:16px; }
+  .er-lib-search .er-lib-search-input { font-size:16px; }
   .modal.er-modal-lib .er-lib-search,
   .modal.er-modal-lib .er-lib-select,
   .modal.er-modal-lib .er-lib-direction { box-sizing:border-box; }
