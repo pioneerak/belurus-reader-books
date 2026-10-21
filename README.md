@@ -28,6 +28,7 @@ Most people keep their notes in Obsidian but read books somewhere else — then 
 - **EPUB formatting toggle:** preserve the book's original styles, fonts, images and layout, or switch to a simplified text-oriented view.
 - **Paged mode** with a 1- or 2-column layout, like a real book, with smooth page turns.
 - **Mobile-friendly:** fullscreen reading, swipe to turn pages, long-press to select text.
+- **iPhone-ready:** safe-area layout for the Dynamic Island/status bar and home indicator, a compact landscape mode, and large touch targets.
 - **Themes:** dark, light, sepia. **Fonts:** Georgia, Lora, Inter. Adjustable font size, line height and column count.
 - **Table of contents** — jump to any chapter in one tap.
 - **Jump to a page** — tap the page counter at the bottom and type a number to go straight to that page/spread, instead of paging there.
@@ -109,6 +110,7 @@ Also: right-click a `.pdf` file → **"📖 Open in Book Reader"**.
 ## 🛟 Tips & troubleshooting
 
 - **Text looks misaligned / broken after opening or closing a sidebar panel or tab?** Press the **Refresh** button (🔄) in the reader's top bar to rebuild the layout. The reading area is measured when the book opens, so changing the window layout (opening/closing a side panel, another tab, resizing the window) can shift the columns — one tap on Refresh re-lays the page and keeps your current position.
+- **iPhone / notched devices:** the full-screen reader and library respect the Dynamic Island, status bar and home indicator in both orientations. Landscape uses compact reader bars and a compact library header; the highlight toolbar wraps and stays inside the page. Read-aloud switches to a phone layout (play/pause, current/total time, chapter picker, speed, mute, close); use the iPhone volume buttons for volume. See [`docs/mobile-iphone.md`](docs/mobile-iphone.md) for the full test checklist.
 
 ---
 
@@ -143,6 +145,7 @@ If this plugin is useful to you, a ⭐ on the repo helps other Obsidian users fi
 - **Переключатель форматирования EPUB:** оригинальные стили, шрифты, изображения и вёрстка книги либо упрощённый текстовый режим.
 - **Постраничный режим** с вёрсткой в 1 или 2 колонки (как в настоящей книге), плавное перелистывание.
 - **На телефоне** — полноэкранный режим, перелистывание свайпом, выделение текста долгим нажатием.
+- **Готово для iPhone:** safe-area под Dynamic Island, строку состояния и домашний индикатор, компактный ландшафт, крупные зоны нажатия.
 - **Темы оформления:** тёмная, светлая, сепия.
 - **Шрифты:** Georgia, Lora, Inter.
 - Настройка **размера шрифта**, **межстрочного интервала** и **числа колонок**.
@@ -258,6 +261,7 @@ If this plugin is useful to you, a ⭐ on the repo helps other Obsidian users fi
 ## 🛟 Советы и решение проблем
 
 - **Текст отображается криво после открытия или закрытия боковой панели / вкладки?** Нажмите кнопку **Обновить** (🔄) на верхней панели читалки — она перестроит вид. Область чтения замеряется при открытии книги, поэтому изменение раскладки окна (открытие/закрытие боковой панели, другой вкладки, смена размера окна) может сдвинуть колонки. Один тап по «Обновить» пере-раскладывает страницу и сохраняет текущую позицию.
+- **iPhone / устройства с «чёлкой»:** полноэкранная читалка и библиотека учитывают Dynamic Island, строку состояния и домашний индикатор в обеих ориентациях. В ландшафте читалка и шапка библиотеки компактные, панель выделения переносится и не выходит за экран. Озвучивание на телефоне показывает компактный плеер (play/pause, текущее/общее время, выбор главы, скорость, mute, закрытие); громкость — боковыми кнопками iPhone. Полный чек-лист — в [`docs/mobile-iphone.md`](docs/mobile-iphone.md).
 
 ---
 
