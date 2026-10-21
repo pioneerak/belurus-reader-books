@@ -206,6 +206,7 @@ img.er-pdf-lazy:not([data-loaded="1"]) { background:color-mix(in srgb,var(--er-t
 .er-lib-brand-text { display:flex; min-width:0; flex-direction:column; gap:8px; }
 .er-lib-brand-name { margin:0!important; color:var(--er-lib-text,#1a1a2e); font-family:Iowan Old Style,Palatino Linotype,Book Antiqua,Georgia,'Times New Roman',serif; font-size:clamp(37px,4vw,61px); font-weight:500; line-height:.92; letter-spacing:-.055em; text-wrap:balance; }
 .er-lib-brand-tag { color:var(--er-lib-accent); font-size:9.5px; line-height:1.25; font-weight:850; letter-spacing:.15em; text-transform:uppercase; }
+.er-lib-brand-version { color:var(--er-lib-muted); font-size:8px; line-height:1; font-weight:600; letter-spacing:.14em; opacity:.55; }
 .er-lib-aside { position:relative; z-index:4; display:flex; min-width:0; flex-direction:column; align-items:flex-end; justify-content:space-between; gap:12px; padding:5px 0 2px; }
 .er-lib-insights { display:grid; width:100%; grid-template-columns:minmax(230px,.82fr) minmax(270px,1.18fr); gap:clamp(22px,2.5vw,46px); align-items:start; }
 .er-lib-favorites { position:relative; min-width:0; padding:7px 0 4px 20px; text-align:left; }
