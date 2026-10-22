@@ -328,7 +328,10 @@ body.er-lib-open .modal-close-button { display:none!important; }
   user-select:none;
   -webkit-user-select:none;
   -webkit-user-drag:none;
+  transform:scale(.965);
+  transition:transform .22s cubic-bezier(.2,.8,.2,1);
 }
+.er-lib-cover-viewer.is-open .er-lib-cover-viewer-img { transform:scale(1); }
 .er-lib-cover-viewer-close {
   position:absolute;
   top:max(14px,calc(env(safe-area-inset-top,0px) + 8px));
