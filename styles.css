@@ -212,7 +212,7 @@ img.er-pdf-lazy:not([data-loaded="1"]) { background:color-mix(in srgb,var(--er-t
 body.er-lib-open { overflow:hidden!important; }
 body.er-lib-open .modal-header-button,
 body.er-lib-open .modal-close-button { display:none!important; }
-.er-lib { display:flex; flex-direction:column; height:100%; background:var(--er-lib-bg,#faf8f3); color:var(--er-lib-text,#1a1a2e); font-family:'Inter',system-ui,sans-serif; overflow:hidden; }
+.er-lib { position:relative; display:flex; flex-direction:column; height:100%; background:var(--er-lib-bg,#faf8f3); color:var(--er-lib-text,#1a1a2e); font-family:'Inter',system-ui,sans-serif; overflow:hidden; }
 .er-lib-hdr { position:relative; z-index:2; flex-shrink:0; padding:20px clamp(18px,1.4vw,28px) 16px; overflow:hidden; }
 .er-lib-hero { position:relative; z-index:2; display:grid; width:100%; grid-template-columns:minmax(470px,.88fr) minmax(600px,1.12fr); gap:clamp(28px,3vw,58px); align-items:stretch; min-height:190px; }
 .er-lib-main { position:relative; z-index:3; display:flex; min-width:0; flex-direction:column; justify-content:space-between; align-items:flex-start; padding:5px 0 2px; }
@@ -283,7 +283,7 @@ body.er-lib-open .modal-close-button { display:none!important; }
    this is safe here) AND an explicit px height from _sizeCovers (belt-and-braces,
    timing-proof). No <img> element exists anywhere → image-mauling themes
    (Cupertino/Encore) have nothing to grab. */
-.er-lib-cover { position:relative; width:100%; aspect-ratio:2/3; overflow:hidden; border-radius:13px 13px 0 0; background-color:var(--er-lib-border,#ddd9ce); background-repeat:no-repeat; background-position:center top; }
+.er-lib-cover { position:relative; width:100%; aspect-ratio:2/3; overflow:hidden; border-radius:13px 13px 0 0; background-color:var(--er-lib-border,#ddd9ce); background-repeat:no-repeat; background-position:center top; -webkit-touch-callout:none; user-select:none; }
 .er-lib-cover-art { position:absolute; z-index:0; inset:0; background-repeat:no-repeat; background-position:center; transform:scale(1); transition:transform .25s cubic-bezier(.22,.8,.26,1),background-size .2s ease; }
 .er-lib-cover.er-fit-fill .er-lib-cover-art { transform:scale(1.06); }
 .er-lib-ph { position:absolute; inset:0; z-index:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; background:linear-gradient(145deg,var(--er-lib-card) 0%,var(--er-lib-border) 100%); }
@@ -296,6 +296,63 @@ body.er-lib-open .modal-close-button { display:none!important; }
 .er-lib-fitbtn:focus-visible { opacity:1; transform:scale(1); outline:2px solid #fff; outline-offset:2px; }
 .er-lib-fitbtn:active { transform:scale(.88); }
 .er-lib-fitbtn svg { width:15px; height:15px; }
+.er-lib-cover:not(.er-has-cover) .er-lib-fitbtn { display:none; }
+/* Full-screen cover preview: the library modal stays underneath, the image is
+   scaled to fit the available viewport height/width and is closed with the X,
+   Escape, or a tap on the dark background. */
+.er-lib-cover-viewer {
+  position:absolute;
+  inset:0;
+  z-index:90;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:max(12px,env(safe-area-inset-top,0px)) max(12px,env(safe-area-inset-right,0px)) max(12px,env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px));
+  box-sizing:border-box;
+  background:#07070c;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  overscroll-behavior:contain;
+  transition:opacity .18s ease,visibility .18s ease;
+}
+.er-lib-cover-viewer.is-open { opacity:1; visibility:visible; pointer-events:auto; }
+.er-lib-cover-viewer-img {
+  display:block;
+  width:100%;
+  height:100%;
+  max-width:100%;
+  max-height:100%;
+  object-fit:contain;
+  border-radius:4px;
+  user-select:none;
+  -webkit-user-select:none;
+  -webkit-user-drag:none;
+}
+.er-lib-cover-viewer-close {
+  position:absolute;
+  top:max(14px,calc(env(safe-area-inset-top,0px) + 8px));
+  right:max(14px,calc(env(safe-area-inset-right,0px) + 8px));
+  z-index:2;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:44px;
+  height:44px;
+  padding:0;
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:50%;
+  background:rgba(20,20,30,.66);
+  color:#fff;
+  cursor:pointer;
+  box-shadow:0 8px 24px rgba(0,0,0,.28);
+  -webkit-backdrop-filter:blur(10px);
+  backdrop-filter:blur(10px);
+  transition:background .15s,transform .15s;
+}
+.er-lib-cover-viewer-close:hover { background:rgba(255,255,255,.18); }
+.er-lib-cover-viewer-close:active { transform:scale(.92); }
+.er-lib-cover-viewer-close svg { width:20px; height:20px; }
 .er-lib-strip { height:6px; margin:auto 0 0; overflow:hidden; flex-shrink:0; border-radius:2px; background:rgba(145,118,224,.18); box-shadow:inset 0 1px 2px rgba(83,57,158,.14); }
 .er-lib-strip-fill { height:100%; border-radius:2px; background:linear-gradient(90deg,#e8ddff 0%,#bca7f4 44%,#8065d7 100%); box-shadow:0 0 7px rgba(128,101,215,.34),inset 0 1px 0 rgba(255,255,255,.5); transition:width .5s cubic-bezier(.4,0,.2,1); }
 .er-lib-strip-done { background:rgba(98,190,132,.18); }
