@@ -1269,8 +1269,14 @@ body.er-lib-open .modal-close-button { display:none!important; }
     gap:2px;
     width:100%;
     min-width:0;
+    /* The round play/pause button fills the 40px action row exactly. Without
+       this breathing room its antialiased top/bottom edge and glow are clipped
+       by the horizontal scroller. Negative margins keep the bar's height. */
+    padding:4px 0;
+    margin:-4px 0;
     overflow-x:auto;
     overflow-y:hidden;
+    box-sizing:border-box;
     scrollbar-width:none;
     -webkit-overflow-scrolling:touch;
   }
@@ -1281,7 +1287,12 @@ body.er-lib-open .modal-close-button { display:none!important; }
     height:40px;
     flex:0 0 40px;
   }
-  .modal.er-modal-reader .er-top .er-ttsbtn { opacity:1; }
+  .modal.er-modal-reader .er-top .er-ttsbtn {
+    opacity:1;
+    /* Keep the glow inside the 4px breathing room above, so it is not cut
+       flat at the top and bottom of the action row. */
+    box-shadow:0 0 4px color-mix(in srgb,var(--er-accent) 42%,transparent);
+  }
   .modal.er-modal-reader .er-top .er-ttsbtn svg { width:15px; height:15px; }
   .modal.er-modal-reader .er-top .er-ibtn:not(.er-ttsbtn) { opacity:.72; }
   .modal.er-modal-reader .er-top .er-ibtn:not(.er-ttsbtn):active { opacity:1; }
