@@ -245,7 +245,7 @@ body.er-lib-open .modal-close-button { display:none!important; }
 .er-lib-quote { animation:er-lib-quote-in .5s cubic-bezier(.22,.8,.26,1) both; }
 @media (prefers-reduced-motion:reduce) { .er-lib-quote { animation:none; } }
 .er-lib-toolbar { display:flex; width:100%; min-width:0; flex-direction:row; align-items:center; gap:9px; margin:20px 0 0; padding:0; }
-.er-lib-search { display:flex; align-items:center; gap:10px; width:auto; height:44px; padding:0 15px; border:1px solid color-mix(in srgb,var(--er-lib-text) 6%,transparent); border-radius:14px; background:color-mix(in srgb,var(--er-lib-bg) 94%,transparent); box-shadow:0 9px 26px color-mix(in srgb,var(--er-lib-text) 7%,transparent),inset 0 1px 0 rgba(255,255,255,.3); flex:0 1 300px; min-width:190px; transition:border-color .15s,box-shadow .15s,background .15s; }
+.er-lib-search { display:flex; align-items:center; gap:10px; width:auto; height:44px; padding:0 15px; border:1px solid color-mix(in srgb,var(--er-lib-text) 6%,transparent); border-radius:14px; background:color-mix(in srgb,var(--er-lib-bg) 94%,transparent); box-shadow:0 9px 26px color-mix(in srgb,var(--er-lib-text) 7%,transparent),inset 0 1px 0 rgba(255,255,255,.3); flex:0 1 260px; min-width:170px; transition:border-color .15s,box-shadow .15s,background .15s; }
 .er-lib-search:focus-within { border-color:var(--er-lib-accent); background:var(--er-lib-bg); box-shadow:0 0 0 3px color-mix(in srgb,var(--er-lib-accent) 13%,transparent); }
 .er-lib-search-ic { display:flex; color:var(--er-lib-muted); opacity:.75; }
 .er-lib-search-ic svg { width:16px; height:16px; }
@@ -871,7 +871,10 @@ body.er-lib-open .modal-close-button { display:none!important; }
     overscroll-behavior:contain;
   }
   .modal.er-modal-lib .er-lib-toolbar { flex-wrap:wrap; row-gap:7px; }
-  .modal.er-modal-lib .er-lib-search { flex:1 1 100%; min-width:0; }
+  /* Keep the search field and the "Онлайн" button on one line: the field gives
+     up the width, the round button stays at its right edge. Filters wrap below. */
+  .modal.er-modal-lib .er-lib-search { flex:1 1 auto; min-width:0; }
+  .modal.er-modal-lib .er-lib-online-btn { width:42px; height:42px; }
   .modal.er-modal-lib .er-lib-filters {
     flex:1 1 100%;
     display:grid;
@@ -1111,15 +1114,40 @@ body.er-lib-open .modal-close-button { display:none!important; }
   }
   .br-audio-player.is-expanded .br-audio-controls { display:contents; }
   .br-audio-player.is-expanded .br-audio-full-head {
-    display:block;
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
     grid-area:head;
     min-width:0;
     padding:2px 0 12px;
   }
+  /* Mini cover in front of the title, exactly one title line tall
+     (20px text at 1.3 line-height = 26px). */
+  .br-audio-full-cover {
+    flex:0 0 auto;
+    width:18px;
+    height:26px;
+    margin-top:1px;
+    border-radius:3px;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:color-mix(in srgb,var(--er-text) 10%,var(--er-bg));
+    background-position:center;
+    background-repeat:no-repeat;
+    background-size:cover;
+    box-shadow:0 1px 3px rgba(0,0,0,.18);
+  }
+  .br-audio-full-cover.has-cover .br-audio-full-cover-ic { display:none; }
+  .br-audio-full-cover-ic { display:flex; color:var(--er-text); opacity:.4; }
+  .br-audio-full-cover-ic svg { width:11px; height:11px; }
   /* The reference player lets the book title run over several lines instead
      of hiding it behind a single-line ellipsis. Cap it at five lines so a very
      long title can never squeeze the chapter list off the screen. */
   .br-audio-full-title {
+    flex:1;
+    min-width:0;
     display:-webkit-box;
     overflow:hidden;
     color:var(--er-text);
