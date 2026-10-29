@@ -849,14 +849,14 @@ body.er-lib-open .modal-close-button { display:none!important; }
   .modal.er-modal-lib.er-lib-has-close .modal-header-button { display:none!important; }
   .modal-container.er-lib-has-close .modal-close-button,
   .modal-container.er-lib-has-close .modal-header-button { display:none!important; }
-  .modal.er-modal-lib .er-lib-brand { align-self:stretch; width:100%; column-gap:6px; padding-right:46px; }
-  .modal.er-modal-lib .er-lib-brand-line { column-gap:6px; row-gap:4px; }
-  .modal.er-modal-lib .er-lib-brand-meta { gap:4px; }
-  .modal.er-modal-lib .er-lib-brand-name { font-size:clamp(26px,8vw,34px); }
-  .modal.er-modal-lib .er-lib-brand-tag { font-size:clamp(7.5px,2vw,8.5px); letter-spacing:.02em; }
+  .modal.er-modal-lib .er-lib-brand { align-self:stretch; width:100%; column-gap:2px; padding-right:40px; }
+  .modal.er-modal-lib .er-lib-brand-line { column-gap:3px; row-gap:4px; }
+  .modal.er-modal-lib .er-lib-brand-meta { gap:3px; }
+  .modal.er-modal-lib .er-lib-brand-name { font-size:clamp(24px,7.2vw,32px); }
+  .modal.er-modal-lib .er-lib-brand-tag { font-size:10px; letter-spacing:0; }
   .modal.er-modal-lib .er-lib-brand-version { font-size:7px; letter-spacing:.06em; }
-  .modal.er-modal-lib .er-lib-logo { width:42px; height:42px; border-radius:14px 14px 14px 4px; }
-  .modal.er-modal-lib .er-lib-logo svg { width:26px; height:26px; }
+  .modal.er-modal-lib .er-lib-logo { width:32px; height:32px; border-radius:11px 11px 11px 4px; }
+  .modal.er-modal-lib .er-lib-logo svg { width:20px; height:20px; }
   .modal.er-modal-lib .er-lib-close {
     position:absolute; top:50%; right:0; transform:translateY(-50%);
     display:flex; align-items:center; justify-content:center;
@@ -1599,13 +1599,13 @@ body.er-lib-open .modal-close-button { display:none!important; }
 
 /* Very narrow phones (<=340px): keep the Folio line on one row. */
 @media (max-width:340px) {
-  .modal.er-modal-lib .er-lib-brand { column-gap:4px; padding-right:38px; }
-  .modal.er-modal-lib .er-lib-brand-line { column-gap:3px; }
-  .modal.er-modal-lib .er-lib-brand-meta { gap:3px; }
-  .modal.er-modal-lib .er-lib-brand-name { font-size:24px; }
-  .modal.er-modal-lib .er-lib-brand-tag { font-size:7.5px; letter-spacing:0; }
+  .modal.er-modal-lib .er-lib-brand { column-gap:2px; padding-right:32px; }
+  .modal.er-modal-lib .er-lib-brand-line { column-gap:2px; }
+  .modal.er-modal-lib .er-lib-brand-meta { gap:2px; }
+  .modal.er-modal-lib .er-lib-brand-name { font-size:20px; }
+  .modal.er-modal-lib .er-lib-brand-tag { font-size:10px; letter-spacing:0; }
   .modal.er-modal-lib .er-lib-brand-version { font-size:6.5px; }
-  .modal.er-modal-lib .er-lib-logo { width:34px; height:34px; border-radius:12px 12px 12px 4px; }
-  .modal.er-modal-lib .er-lib-logo svg { width:21px; height:21px; }
-  .modal.er-modal-lib .er-lib-close { width:36px; height:36px; }
+  .modal.er-modal-lib .er-lib-logo { width:30px; height:30px; border-radius:10px 10px 10px 3px; }
+  .modal.er-modal-lib .er-lib-logo svg { width:19px; height:19px; }
+  .modal.er-modal-lib .er-lib-close { width:32px; height:32px; }
 }
