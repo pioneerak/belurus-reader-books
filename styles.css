@@ -229,7 +229,7 @@ body.er-lib-open .modal-close-button { display:none!important; }
 .er-lib-brand-line { display:flex; align-items:baseline; flex-wrap:wrap; column-gap:14px; row-gap:6px; min-width:0; }
 .er-lib-brand-meta { display:flex; align-items:baseline; gap:10px; min-width:0; flex-wrap:wrap; }
 .er-lib-brand-name { margin:0!important; color:var(--er-lib-text,#1a1a2e); font-family:Iowan Old Style,Palatino Linotype,Book Antiqua,Georgia,'Times New Roman',serif; font-size:clamp(37px,4vw,61px); font-weight:500; line-height:.92; letter-spacing:-.055em; text-wrap:balance; }
-.er-lib-brand-tag { color:var(--er-lib-accent); font-size:9.5px; line-height:1.25; font-weight:800; letter-spacing:.1em; }
+.er-lib-brand-tag { color:var(--er-lib-accent); font-size:12px; line-height:1.25; font-weight:800; letter-spacing:.08em; }
 .er-lib-brand-version { color:var(--er-lib-muted); font-size:8px; line-height:1; font-weight:600; letter-spacing:.14em; opacity:.55; }
 .er-lib-aside { position:relative; z-index:4; display:flex; min-width:0; flex-direction:column; align-items:flex-end; justify-content:space-between; gap:12px; padding:5px 0 2px; }
 .er-lib-insights { display:grid; width:100%; grid-template-columns:minmax(230px,.82fr) minmax(270px,1.18fr); gap:clamp(22px,2.5vw,46px); align-items:start; }
@@ -486,7 +486,7 @@ body.er-lib-open .modal-close-button { display:none!important; }
   .er-lib-logo svg { width:32px; height:32px; }
   .er-lib-brand { column-gap:13px; row-gap:6px; padding-right:34px; }
   .er-lib-brand-name { font-size:clamp(32px,8.2vw,47px); }
-  .er-lib-brand-tag { font-size:8px; letter-spacing:.11em; }
+  .er-lib-brand-tag { font-size:10px; letter-spacing:.07em; }
   .er-lib-toolbar { width:100%; margin-top:17px; }
   .er-lib-search { flex:0 0 min(34vw,240px); min-width:160px; }
   .er-lib-filters { overflow-x:auto; padding:1px 0 3px; scrollbar-width:none; }
@@ -853,7 +853,7 @@ body.er-lib-open .modal-close-button { display:none!important; }
   .modal.er-modal-lib .er-lib-brand-line { column-gap:6px; row-gap:4px; }
   .modal.er-modal-lib .er-lib-brand-meta { gap:4px; }
   .modal.er-modal-lib .er-lib-brand-name { font-size:clamp(26px,8vw,34px); }
-  .modal.er-modal-lib .er-lib-brand-tag { font-size:7px; letter-spacing:.02em; }
+  .modal.er-modal-lib .er-lib-brand-tag { font-size:clamp(7.5px,2vw,8.5px); letter-spacing:.02em; }
   .modal.er-modal-lib .er-lib-brand-version { font-size:7px; letter-spacing:.06em; }
   .modal.er-modal-lib .er-lib-logo { width:42px; height:42px; border-radius:14px 14px 14px 4px; }
   .modal.er-modal-lib .er-lib-logo svg { width:26px; height:26px; }
@@ -1599,11 +1599,11 @@ body.er-lib-open .modal-close-button { display:none!important; }
 
 /* Very narrow phones (<=340px): keep the Folio line on one row. */
 @media (max-width:340px) {
-  .modal.er-modal-lib .er-lib-brand { column-gap:4px; padding-right:40px; }
-  .modal.er-modal-lib .er-lib-brand-line { column-gap:4px; }
+  .modal.er-modal-lib .er-lib-brand { column-gap:4px; padding-right:38px; }
+  .modal.er-modal-lib .er-lib-brand-line { column-gap:3px; }
   .modal.er-modal-lib .er-lib-brand-meta { gap:3px; }
   .modal.er-modal-lib .er-lib-brand-name { font-size:24px; }
-  .modal.er-modal-lib .er-lib-brand-tag,
+  .modal.er-modal-lib .er-lib-brand-tag { font-size:7.5px; letter-spacing:0; }
   .modal.er-modal-lib .er-lib-brand-version { font-size:6.5px; }
   .modal.er-modal-lib .er-lib-logo { width:34px; height:34px; border-radius:12px 12px 12px 4px; }
   .modal.er-modal-lib .er-lib-logo svg { width:21px; height:21px; }
