@@ -71,7 +71,7 @@ img.er-pdf-lazy:not([data-loaded="1"]) { background:color-mix(in srgb,var(--er-t
 .br-audio-progress-wrap { position:relative; height:8px; overflow:hidden; background:transparent; cursor:pointer; }
 .br-audio-progress-wrap[hidden] { display:none!important; }
 .br-audio-segments { position:absolute; inset:1px 0; display:flex; gap:2px; pointer-events:none; }
-.br-audio-segment { position:relative; min-width:2px; overflow:hidden; border-radius:4px; background:color-mix(in srgb,var(--er-muted) 30%,transparent); }
+.br-audio-segment { position:relative; min-width:2px; overflow:hidden; border-radius:0; background:color-mix(in srgb,var(--er-muted) 30%,transparent); }
 .br-audio-segment-fill { position:absolute; inset:0 auto 0 0; width:0; background:var(--er-accent); box-shadow:0 0 10px color-mix(in srgb,var(--er-accent) 55%,transparent); }
 .br-audio-progress { position:absolute; inset:-8px 0; z-index:2; width:100%; height:22px; margin:0; opacity:0; pointer-events:none; }
 .br-audio-controls { display:flex; min-width:0; min-height:58px; align-items:center; gap:10px; padding:7px 11px; font:500 14px/1.25 'Inter',system-ui,sans-serif; }
@@ -1244,7 +1244,7 @@ body.er-lib-open .modal-close-button { display:none!important; }
   }
   .br-audio-player.is-expanded .br-audio-segments { inset:0; gap:3px; }
   .br-audio-player.is-expanded .br-audio-segment {
-    border-radius:999px;
+    border-radius:0;
     background:color-mix(in srgb,var(--er-text) 16%,transparent);
   }
   .br-audio-player.is-expanded .br-audio-segment-fill { box-shadow:none; }
@@ -1260,7 +1260,7 @@ body.er-lib-open .modal-close-button { display:none!important; }
     height:40px;
     padding:0 4px!important;
     border-radius:0!important;
-    color:color-mix(in srgb,var(--er-text) 78%,var(--er-muted))!important;
+    color:var(--er-muted)!important;
     background:transparent!important;
     font-size:15px;
     font-weight:600;
@@ -1277,13 +1277,13 @@ body.er-lib-open .modal-close-button { display:none!important; }
     width:48px;
     height:48px;
     border-radius:0!important;
-    color:color-mix(in srgb,var(--er-text) 86%,var(--er-muted))!important;
+    color:var(--er-muted)!important;
     background:transparent!important;
   }
   .br-audio-player.is-expanded .br-audio-icon svg { width:31px; height:31px; }
-  .br-audio-player.is-expanded .br-audio-play { width:64px; height:64px; }
-  .br-audio-player.is-expanded .br-audio-play-icon svg { width:24px; height:24px; }
-  .br-audio-player.is-expanded .br-audio-visualizer { width:42px; height:42px; }
+  .br-audio-player.is-expanded .br-audio-play { width:45px; height:45px; }
+  .br-audio-player.is-expanded .br-audio-play-icon svg { width:17px; height:17px; }
+  .br-audio-player.is-expanded .br-audio-visualizer { width:30px; height:30px; }
   .br-audio-player.is-expanded .br-audio-volume {
     display:flex;
     grid-area:volume;
@@ -1296,7 +1296,7 @@ body.er-lib-open .modal-close-button { display:none!important; }
     width:44px;
     height:44px;
     flex:0 0 44px;
-    color:color-mix(in srgb,var(--er-text) 86%,var(--er-muted))!important;
+    color:var(--er-muted)!important;
     background:transparent!important;
   }
   .br-audio-player.is-expanded .br-audio-volume-button svg { width:22px; height:22px; }
@@ -1343,8 +1343,9 @@ body.er-lib-open .modal-close-button { display:none!important; }
     box-sizing:border-box;
   }
   .br-audio-player.is-expanded .br-audio-timecode-item {
+    position:relative;
     display:grid;
-    grid-template-columns:12px minmax(0,1fr) auto;
+    grid-template-columns:minmax(0,1fr) auto;
     align-items:center;
     gap:9px;
     width:100%;
@@ -1361,11 +1362,21 @@ body.er-lib-open .modal-close-button { display:none!important; }
     color:var(--er-accent);
     background:transparent;
   }
+  /* The pulsing dot sits in the left gutter at the row start (the same x as
+     the "По главам" heading), so regular titles align with the heading and
+     only the current chapter's title makes room for the dot. */
   .br-audio-player.is-expanded .br-audio-timecode-dot {
+    position:absolute;
+    top:50%;
+    left:16px;
     width:7px;
     height:7px;
+    margin-top:-3.5px;
     border-radius:50%;
     background:transparent;
+  }
+  .br-audio-player.is-expanded .br-audio-timecode-item.is-current .br-audio-timecode-title {
+    padding-left:18px;
   }
   .br-audio-player.is-expanded .br-audio-timecode-item.is-current .br-audio-timecode-dot {
     background:var(--er-accent);
