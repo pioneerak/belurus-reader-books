@@ -1136,14 +1136,14 @@ body.er-lib-open .modal-close-button { display:none!important; }
     min-width:0;
     padding:2px 0 12px;
   }
-  /* Mini cover in front of the title, exactly one title line tall
-     (20px text at 1.3 line-height = 26px). */
+  /* Cover in front of the title: 36x52, twice the previous 18x26, so the
+     artwork is recognisable at a glance. */
   .br-audio-full-cover {
     flex:0 0 auto;
-    width:18px;
-    height:26px;
-    margin-top:1px;
-    border-radius:3px;
+    width:36px;
+    height:52px;
+    margin-top:0;
+    border-radius:6px;
     overflow:hidden;
     display:flex;
     align-items:center;
@@ -1156,7 +1156,7 @@ body.er-lib-open .modal-close-button { display:none!important; }
   }
   .br-audio-full-cover.has-cover .br-audio-full-cover-ic { display:none; }
   .br-audio-full-cover-ic { display:flex; color:var(--er-text); opacity:.4; }
-  .br-audio-full-cover-ic svg { width:11px; height:11px; }
+  .br-audio-full-cover-ic svg { width:20px; height:20px; }
   /* The reference player lets the book title run over several lines instead
      of hiding it behind a single-line ellipsis. Cap it at five lines so a very
      long title can never squeeze the chapter list off the screen. */
@@ -1322,8 +1322,8 @@ body.er-lib-open .modal-close-button { display:none!important; }
   .br-audio-player.is-expanded .br-audio-timecodes-list {
     flex:1 1 auto;
     min-height:0;
-    width:100%;
-    max-width:100%;
+    width:auto;
+    max-width:none;
     overflow-x:hidden;
     overflow-y:auto;
     overscroll-behavior-x:none;
@@ -1336,7 +1336,10 @@ body.er-lib-open .modal-close-button { display:none!important; }
     -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 34px,#000 calc(100% - 34px),transparent 100%);
     mask-image:linear-gradient(to bottom,transparent 0,#000 34px,#000 calc(100% - 34px),transparent 100%);
     scroll-padding-block:34px;
-    padding:0 6px 26px;
+    /* Full-bleed rows: cancel the player's side padding so each chapter row
+       spans the whole screen; the row's own padding keeps the text inset. */
+    margin:0 calc(-1 * max(16px, env(safe-area-inset-right, 0px))) 0 calc(-1 * max(16px, env(safe-area-inset-left, 0px)));
+    padding:0 0 26px;
     box-sizing:border-box;
   }
   .br-audio-player.is-expanded .br-audio-timecode-item {
@@ -1346,10 +1349,10 @@ body.er-lib-open .modal-close-button { display:none!important; }
     gap:9px;
     width:100%;
     max-width:100%;
-    min-height:42px;
+    min-height:34px;
     margin:0;
-    padding:6px 8px;
-    border-radius:10px;
+    padding:2px 16px;
+    border-radius:0;
     color:var(--er-text);
     cursor:pointer;
     box-sizing:border-box;
@@ -1373,7 +1376,7 @@ body.er-lib-open .modal-close-button { display:none!important; }
     min-width:0;
     overflow:hidden;
     font-size:14px;
-    line-height:1.4;
+    line-height:1.3;
     text-overflow:ellipsis;
     white-space:nowrap;
   }
